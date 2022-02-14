@@ -17,7 +17,7 @@ jobs:
           from: alpine[latest,3],debian[latest,11,11-slim,10,10-slim,9,9-slim],ubuntu[latest,20.04,18.04]
           to: ${{ github.repository_owner }}
           extra-registry: ghcr.io
-          allowed-platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
+          allowed-platforms: linux/amd64,linux/arm/v7,linux/arm64
           updateAll: ${{ github.event_name != 'schedule' }}
     outputs:
       matrix: ${{ steps.tags.outputs.matrix }}

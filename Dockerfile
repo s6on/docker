@@ -3,14 +3,18 @@ FROM alpine:3 as extractor
 
 ARG TARGETARCH
 ARG TARGETVARIANT
-ARG S6_RELEASE=3.0.0.2
+ARG S6_RELEASE
 
-RUN apk add --no-cache curl && \
+RUN apk add --no-cache curl jq && \
+    if [ -z ${S6_RELEASE} ]; then \
+      S6_RELEASE=$(curl -s https://api.github.com/repos/just-containers/s6-overlay/releases/latest | jq -r '.tag_name' | cut -c2-) ;\
+    fi && \
     S6_PLATFORM=$(case "${TARGETARCH}/${TARGETVARIANT}" in \
             "arm/v7")   echo "armhf";; \
             "arm64/")   echo "aarch64";; \
-	    *)		echo "x86_64";; \
+	        *)		    echo "x86_64";; \
           esac) && \
+    echo "Using s6 release ${S6_RELEASE} platform ${S6_PLATFORM}" && \
     curl -sSL "https://github.com/just-containers/s6-overlay/releases/latest/download/s6-overlay-noarch-${S6_RELEASE}.tar.xz" -o "/tmp/s6-noarch.tar.xz" && \
     curl -sSL "https://github.com/just-containers/s6-overlay/releases/latest/download/s6-overlay-${S6_PLATFORM}-${S6_RELEASE}.tar.xz" -o "/tmp/s6-arch.tar.xz" && \
     mkdir -p /s6/root && \
