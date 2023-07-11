@@ -12,11 +12,11 @@ RUN apk add --no-cache curl jq && \
     S6_PLATFORM=$(case "${TARGETARCH}/${TARGETVARIANT}" in \
             "arm/v7")   echo "armhf";; \
             "arm64/")   echo "aarch64";; \
-	        *)		    echo "x86_64";; \
+	        *)	echo "x86_64";; \
           esac) && \
     echo "Using s6 release ${S6_RELEASE} platform ${S6_PLATFORM}" && \
-    curl -sSL "https://github.com/just-containers/s6-overlay/releases/latest/download/s6-overlay-noarch-${S6_RELEASE}.tar.xz" -o "/tmp/s6-noarch.tar.xz" && \
-    curl -sSL "https://github.com/just-containers/s6-overlay/releases/latest/download/s6-overlay-${S6_PLATFORM}-${S6_RELEASE}.tar.xz" -o "/tmp/s6-arch.tar.xz" && \
+    curl -sSL "https://github.com/just-containers/s6-overlay/releases/download/v${S6_RELEASE}/s6-overlay-noarch.tar.xz" -o "/tmp/s6-noarch.tar.xz" && \
+    curl -sSL "https://github.com/just-containers/s6-overlay/releases/download/v${S6_RELEASE}/s6-overlay-${S6_PLATFORM}.tar.xz" -o "/tmp/s6-arch.tar.xz" && \
     mkdir -p /s6/root && \
     tar -C /s6/root -Jxpf /tmp/s6-noarch.tar.xz && \
     tar -C /s6/root -Jxpf /tmp/s6-arch.tar.xz
