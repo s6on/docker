@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Get missing tags
         id: tags
-        uses: s6on/mirror-docker-tags-action@v1.1
+        uses: s6on/mirror-docker-tags-action@v1.2
         with:
           from: alpine[latest,3],debian[latest,11,11-slim,10,10-slim,9,9-slim],ubuntu[latest,20.04,18.04]
           to: ${{ github.repository_owner }}
