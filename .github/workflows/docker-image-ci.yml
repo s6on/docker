@@ -15,7 +15,7 @@ jobs:
         id: tags
         uses: s6on/mirror-docker-tags-action@v1.2
         with:
-          from: alpine[latest,3],debian[latest,11,11-slim,10,10-slim,9,9-slim],ubuntu[latest,20.04,18.04]
+          from: alpine[latest,3],debian[latest,12,12-slim,11,11-slim,10,10-slim],ubuntu[latest,22.04,20.04,18.04]
           to: ${{ github.repository_owner }}
           extra-registry: ghcr.io
           allowed-platforms: linux/amd64,linux/arm/v7,linux/arm64
